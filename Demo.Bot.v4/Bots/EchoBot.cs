@@ -6,6 +6,7 @@
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +27,11 @@ namespace Demo.Bot.v4.Bots
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    await turnContext.SendActivityAsync(MessageFactory.Text(welcomeText, welcomeText), cancellationToken);
+                    await turnContext.SendActivityAsync(MessageFactory.SuggestedActions(new List<string>
+                    {
+                        string.Join("|", membersAdded.Select(account => $"{account.Id}{account.Name}")),
+                        welcomeText
+                    }), cancellationToken);
                 }
             }
         }
