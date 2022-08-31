@@ -51,3 +51,10 @@ C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\obj\De
 C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\obj\Debug\net6.0\Demo.Bot.v4.pdb
 C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\obj\Debug\net6.0\Demo.Bot.v4.genruntimeconfig.cache
 C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\obj\Debug\net6.0\ref\Demo.Bot.v4.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Azure.Core.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Azure.Storage.Blobs.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Azure.Storage.Common.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Bot.Builder.Azure.Blobs.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\System.IO.Hashing.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\System.Memory.Data.dll

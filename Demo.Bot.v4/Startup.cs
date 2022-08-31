@@ -3,9 +3,11 @@
 //
 // Generated with Bot Builder V4 SDK Template for Visual Studio EchoBot v4.16.0
 
+using Demo.Bot.v4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Azure.Blobs;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
@@ -16,10 +18,7 @@ namespace Demo.Bot.v4
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -37,24 +36,34 @@ namespace Demo.Bot.v4
             // Create the Bot Adapter with error handling enabled.
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
 
+            services.AddSingleton<IStorage, MemoryStorage>();
+
+            // For production and permanent storage we can use Azure blob storage as IStorageProvider
+            //var          connectionString = Configuration.GetValue<string>("BlobStorageConnectionString");
+            //const string container        = "mybotstatedata";
+            //var          blobsStorage     = new BlobsStorage(connectionString, container);
+            //services.AddSingleton<IStorage>(blobsStorage);
+
+            services.AddSingleton<UserState>();
+            services.AddSingleton<ConversationState>();
+            services.AddSingleton<StateService>();
+
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, Bots.EchoBot>();
+            services.AddTransient<IBot, Bots.GreetingBot>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
 
             app.UseDefaultFiles()
-                .UseStaticFiles()
-                .UseWebSockets()
-                .UseRouting()
-                .UseAuthorization()
-                .UseEndpoints(endpoints =>
+               .UseStaticFiles()
+               .UseWebSockets()
+               .UseRouting()
+               .UseAuthorization()
+               .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
                 });
