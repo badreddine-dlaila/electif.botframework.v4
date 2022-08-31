@@ -10,7 +10,7 @@ using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace DialogBot.Bots
+namespace Demo.Bot.v4.Bots
 {
     public class DialogBot<T> : ActivityHandler where T : Dialog
     {
@@ -18,18 +18,11 @@ namespace DialogBot.Bots
         private readonly T                     _dialog;
         private readonly ILogger<DialogBot<T>> _logger;
 
-        // Dependency injected dictionary for storing ConversationReference objects used in NotifyController to proactively message users
-        private readonly ConcurrentDictionary<string, ConversationReference> _conversationReferences;
-
-        public DialogBot(StateService stateService,
-                         T dialog,
-                         ConcurrentDictionary<string, ConversationReference> conversationReferences,
-                         ILogger<DialogBot<T>> logger)
+        public DialogBot(StateService stateService, T dialog, ILogger<DialogBot<T>> logger)
         {
-            _stateService           = stateService ?? throw new ArgumentNullException(nameof(stateService));
-            _dialog                 = dialog ?? throw new ArgumentNullException(nameof(dialog));
-            _conversationReferences = conversationReferences ?? throw new ArgumentNullException(nameof(conversationReferences));
-            _logger                 = logger ?? throw new ArgumentNullException(nameof(logger));
+            _stateService = stateService ?? throw new ArgumentNullException(nameof(stateService));
+            _dialog       = dialog ?? throw new ArgumentNullException(nameof(dialog));
+            _logger       = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -45,15 +38,8 @@ namespace DialogBot.Bots
         {
             _logger.LogInformation("Running dialog with Message Activity.");
 
-            var conversationReference = (turnContext.Activity as Activity)?.GetConversationReference();
-            _conversationReferences.AddOrUpdate(conversationReference?.User.Id, conversationReference, (key, newValue) => conversationReference);
-
-            var activity = turnContext.Activity;
-            if (string.IsNullOrWhiteSpace(activity.Text) && activity.Value != null)
-                activity.Text = JsonConvert.SerializeObject(activity.Value);
-
             // Run the dialog with the new message activity
-            //await _dialog.Run(turnContext, _stateService.DialogStateAccessor, cancellationToken);
+            await _dialog.Run(turnContext, _stateService.DialogStateAccessor, cancellationToken);
         }
     }
 }

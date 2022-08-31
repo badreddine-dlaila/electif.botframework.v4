@@ -58,3 +58,10 @@ C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\De
 C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Bot.Builder.Azure.Blobs.dll
 C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\System.IO.Hashing.dll
 C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\System.Memory.Data.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Bot.Builder.Dialogs.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Recognizers.Definitions.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Recognizers.Text.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Recognizers.Text.Choice.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Recognizers.Text.DateTime.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Recognizers.Text.Number.dll
+C:\Users\BadreddineDLAILA\source\esgi\electif.botframework.v4\Demo.Bot.v4\bin\Debug\net6.0\Microsoft.Recognizers.Text.NumberWithUnit.dll
