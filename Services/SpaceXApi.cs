@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -29,9 +32,88 @@ namespace Demo.Bot.v4.Services
 
             return launches;
         }
+
+        public async Task<Launch> GetNextLaunch()
+        {
+            var response = await _httpClient.GetAsync("launches/next");
+            var content  = await response.Content.ReadAsStringAsync();
+            var launch   = JsonConvert.DeserializeObject<Launch>(content);
+            return launch;
+        }
+
+        public async Task<Launch> GetPastLaunch()
+        {
+            var query = new ApiQuery
+            {
+                Query = new { upcoming = false },
+                Options = new Options
+                {
+                    Sort       = new { date_unix = -1 },
+                    Pagination = false
+                }
+            };
+            var queryAsString = JsonConvert.SerializeObject(query);
+            var response      = await _httpClient.PostAsync("launches/query", new StringContent(queryAsString, Encoding.UTF8, MediaTypeNames.Application.Json));
+            var content       = await response.Content.ReadAsStringAsync();
+            var launch        = JsonConvert.DeserializeObject<QueryResult<Launch>>(content)!;
+            return launch.Docs.FirstOrDefault(l => l.Details is not null or "");
+        }
     }
 
     #region SaceXApi DTOs
+
+    public class QueryResult<T>
+    {
+        [JsonProperty("docs")]
+        public IEnumerable<T> Docs { get; set; }
+
+        [JsonProperty("totalDocs")]
+        public string TotalDocs { get; set; }
+
+        [JsonProperty("offset")]
+        public string Offset { get; set; }
+
+        [JsonProperty("limit")]
+        public string Limit { get; set; }
+
+        [JsonProperty("totalPages")]
+        public string TotalPages { get; set; }
+
+        [JsonProperty("page")]
+        public string Page { get; set; }
+
+        [JsonProperty("pagingCounter")]
+        public string PagingCounter { get; set; }
+
+        [JsonProperty("hasPrevPage")]
+        public bool HasPrevPage { get; set; }
+
+        [JsonProperty("hasNextPage")]
+        public bool HasNextPage { get; set; }
+
+        [JsonProperty("prevPage")]
+        public string PrevPage { get; set; }
+
+        [JsonProperty("nextPage")]
+        public string NextPage { get; set; }
+    }
+
+    public class ApiQuery
+    {
+        [JsonProperty("query")]
+        public object Query { get; set; }
+
+        [JsonProperty("options")]
+        public Options Options { get; set; }
+    }
+
+    public class Options
+    {
+        [JsonProperty("sort")]
+        public object Sort { get; set; }
+        [JsonProperty("pagination")]
+        public bool Pagination { get; set; }
+    }
 
     public class CompanyInfo
     {
