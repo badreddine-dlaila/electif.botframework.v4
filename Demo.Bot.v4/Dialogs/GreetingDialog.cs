@@ -14,7 +14,7 @@ public class GreetingDialog : ComponentDialog
     private readonly StateService _botStateService;
     private readonly GithubApi    _githubApi;
 
-    public GreetingDialog(StateService botStateService, GithubApi githubApi) : base(nameof(GreetingDialog))
+    public GreetingDialog(string dialogId, StateService botStateService, GithubApi githubApi) : base(dialogId)
     {
         _botStateService = botStateService;
         _githubApi       = githubApi;
@@ -66,23 +66,27 @@ public class GreetingDialog : ComponentDialog
 
     private async Task<DialogTurnResult> FinalStep(WaterfallStepContext stepContext, CancellationToken cancellationToken)
     {
-        var githubCode = (string)stepContext.Result;
-        var userName   = await _githubApi.GetUserName(githubCode);
-
         // Check if we have the user's name in state
         var userProfile = await _botStateService.UserProfileAccessor.GetAsync(stepContext.Context, () => new UserProfile(), cancellationToken);
 
         // Get the previously typed response from the user 
-        if (string.IsNullOrEmpty(userProfile.Name))
+        if (string.IsNullOrEmpty(userProfile.Name) || string.IsNullOrEmpty(userProfile.Email) || string.IsNullOrEmpty(userProfile.Login))
         {
-            // Set the name
-            userProfile.Name = userName;
+            var githubCode = (string)stepContext.Result;
+            var githubUser = await _githubApi.GetGithubUser(githubCode);
+
+            // Set user profile personal information
+            userProfile.Name  = githubUser.Name;
+            userProfile.Email = githubUser.Email;
+            userProfile.Login = githubUser.Login;
 
             // Save any changes that might have occurred during the run
             await _botStateService.UserProfileAccessor.SetAsync(stepContext.Context, userProfile, cancellationToken);
         }
 
-        var activity = MessageFactory.Text($"Hello {userProfile.Name} 😊");
+        var activity = MessageFactory.Text($"Hello {userProfile.Name}! Your information has been set 🥷" +
+                                           $"\r\n(Login: {userProfile.Login}, Email: {userProfile.Email})");
+
         await stepContext.Context.SendActivityAsync(activity, cancellationToken);
 
         // End dialog

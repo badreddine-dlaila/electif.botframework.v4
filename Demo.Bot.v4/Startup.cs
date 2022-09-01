@@ -47,6 +47,7 @@ namespace Demo.Bot.v4
             services.AddHttpClient<GithubApi>(client =>
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+                client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("bot-demo", "1.0"));
             });
 
             // User state 
@@ -56,10 +57,10 @@ namespace Demo.Bot.v4
             services.AddSingleton<ConversationState>();
             // Create an instance of the state service 
             services.AddSingleton<StateService>();
-            services.AddSingleton<GreetingDialog>();
+            services.AddSingleton<MainDialog>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, DialogBot<GreetingDialog>>();
+            services.AddTransient<IBot, DialogBot<MainDialog>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
