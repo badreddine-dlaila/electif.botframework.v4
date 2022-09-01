@@ -3,6 +3,8 @@
 //
 // Generated with Bot Builder V4 SDK Template for Visual Studio EchoBot v4.16.0
 
+using System.Net.Http.Headers;
+using System.Net.Mime;
 using Demo.Bot.v4.Bots;
 using Demo.Bot.v4.Dialogs;
 using Demo.Bot.v4.Helpers;
@@ -40,6 +42,12 @@ namespace Demo.Bot.v4
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
 
             services.AddSingleton<IStorage, MemoryStorage>();
+
+            // Github API
+            services.AddHttpClient<GithubApi>(client =>
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+            });
 
             // User state 
             services.AddSingleton<UserState>();
