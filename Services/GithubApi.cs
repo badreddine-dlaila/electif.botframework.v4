@@ -20,7 +20,7 @@ public class GithubApi
         var authenticationParameters = new Dictionary<string, string>
         {
             ["code"]          = code,
-            ["redirect_uri"]  = "http://localhost:3979/api/oauth/callback",
+            ["redirect_uri"]  = "https://localhost:3979/api/oauth/callback",
             ["client_id"]     = "7154fa8c5e000e28fe87",
             ["client_secret"] = "c801865e6159ef9567372272953e0df27ae727a7"
         };

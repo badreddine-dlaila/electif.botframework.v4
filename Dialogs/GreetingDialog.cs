@@ -52,7 +52,7 @@ public class GreetingDialog : ComponentDialog
             return await stepContext.NextAsync(null, cancellationToken);
 
         // If no user name found, kick start a github sign-in 
-        const string signinLink = "https://github.com/login/oauth/authorize?client_id=7154fa8c5e000e28fe87&scope=user%20repo&redirect_uri=http://localhost:3978/api/oauth/callback";
+        const string signinLink = "https://github.com/login/oauth/authorize?client_id=7154fa8c5e000e28fe87&scope=user%20repo&redirect_uri=https://localhost:3979/api/oauth/callback";
         var signinCard = new SigninCard
         {
             Text    = "Github sign-in",

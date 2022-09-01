@@ -3,16 +3,16 @@
 //
 // Generated with Bot Builder V4 SDK Template for Visual Studio EchoBot v4.16.0
 
+using System;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using Demo.Bot.v4.Bots;
 using Demo.Bot.v4.Dialogs;
-using Demo.Bot.v4.Helpers;
+using Demo.Bot.v4.Dialogs.SpaceX;
 using Demo.Bot.v4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Azure.Blobs;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
@@ -50,6 +50,9 @@ namespace Demo.Bot.v4
                 client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("bot-demo", "1.0"));
             });
 
+            // SpaceXApi
+            services.AddHttpClient<SpaceXApi>(client => client.BaseAddress = new Uri("https://api.spacexdata.com/v4/"));
+
             // User state 
             services.AddSingleton<UserState>();
 
@@ -57,10 +60,10 @@ namespace Demo.Bot.v4
             services.AddSingleton<ConversationState>();
             // Create an instance of the state service 
             services.AddSingleton<StateService>();
-            services.AddSingleton<MainDialog>();
+            services.AddSingleton<MainSpaceXDialog>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, DialogBot<MainDialog>>();
+            services.AddTransient<IBot, DialogBot<MainSpaceXDialog>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
