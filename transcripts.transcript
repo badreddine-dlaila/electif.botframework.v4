@@ -1,0 +1,62 @@
+[
+  {
+    "type": "conversationUpdate",
+    "membersAdded": [
+      {
+        "id": "c1aa1c40-2910-11ed-bad8-0b619a7067dd",
+        "name": "Bot"
+      },
+      {
+        "id": "b2c877d2-39ab-46d8-bd54-0d2eacc90d6c",
+        "name": "User"
+      }
+    ],
+    "membersRemoved": [],
+    "channelId": "emulator",
+    "conversation": {
+      "id": "e7d78470-2910-11ed-bad8-0b619a7067dd|livechat"
+    },
+    "id": "e7df2590-2910-11ed-b289-49ab706ca28b",
+    "localTimestamp": "2022-08-31T11:40:10+02:00",
+    "recipient": {
+      "id": "c1aa1c40-2910-11ed-bad8-0b619a7067dd",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "timestamp": "2022-08-31T09:40:10.473Z",
+    "from": {
+      "id": "b2c877d2-39ab-46d8-bd54-0d2eacc90d6c",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "en-US",
+    "serviceUrl": "http://localhost:54909"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:54909",
+    "channelId": "emulator",
+    "from": {
+      "id": "c1aa1c40-2910-11ed-bad8-0b619a7067dd",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "e7d78470-2910-11ed-bad8-0b619a7067dd|livechat"
+    },
+    "recipient": {
+      "id": "b2c877d2-39ab-46d8-bd54-0d2eacc90d6c",
+      "role": "user"
+    },
+    "locale": "en-US",
+    "text": "Hello and welcome!",
+    "speak": "Hello and welcome!",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "e7df2590-2910-11ed-b289-49ab706ca28b",
+    "id": "e7ed5660-2910-11ed-b289-49ab706ca28b",
+    "localTimestamp": "2022-08-31T11:40:10+02:00",
+    "timestamp": "2022-08-31T09:40:10.566Z"
+  }
+]

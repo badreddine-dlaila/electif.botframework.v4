@@ -1,0 +1,18 @@
+{
+    "name": "DemoBot",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "name": "http://localhost:3978/api/messages",
+            "id": "12c131a0-2910-11ed-bad8-0b619a7067dd",
+            "appId": "",
+            "appPassword": "",
+            "endpoint": "http://localhost:3978/api/messages"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "path": "C:\\Users\\BadreddineDLAILA\\source\\esgi\\electif.botframework.v4\\Demo.Bot.v4\\DemoBot.bot",
+    "overrides": null
+}
