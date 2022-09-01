@@ -14,7 +14,7 @@ namespace Demo.Bot.v4.Services
 
         public async Task<CompanyInfo> GetCompanyInfo()
         {
-            var response = await _httpClient.GetAsync("/company");
+            var response = await _httpClient.GetAsync("company");
             var content  = await response.Content.ReadAsStringAsync();
             var company  = JsonConvert.DeserializeObject<CompanyInfo>(content);
 
@@ -23,7 +23,7 @@ namespace Demo.Bot.v4.Services
 
         public async Task<IEnumerable<Launch>> GetLaunches()
         {
-            var response = await _httpClient.GetAsync("/launches");
+            var response = await _httpClient.GetAsync("launches");
             var content  = await response.Content.ReadAsStringAsync();
             var launches = JsonConvert.DeserializeObject<IEnumerable<Launch>>(content);
 

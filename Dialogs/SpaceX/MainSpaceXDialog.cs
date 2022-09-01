@@ -4,6 +4,8 @@ using Microsoft.Bot.Builder.Dialogs;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.Extensions.Logging;
+using Microsoft.Bot.Builder.Dialogs.Choices;
+using System.Collections.Generic;
 
 namespace Demo.Bot.v4.Dialogs.SpaceX
 {
@@ -29,9 +31,8 @@ namespace Demo.Bot.v4.Dialogs.SpaceX
             // Waterfall steps
             var waterfallSteps = new WaterfallStep[]
             {
-                GreetingStep,
-                InitialStep,
-                FinalStep
+                //GreetingStep,
+                InitialStep, FinalStep
             };
 
             // Add named dialogs
@@ -43,20 +44,32 @@ namespace Demo.Bot.v4.Dialogs.SpaceX
             InitialDialogId = $"{nameof(MainSpaceXDialog)}.mainFlow";
         }
 
-        private static async Task<DialogTurnResult> GreetingStep(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-            return await stepContext.BeginDialogAsync($"{nameof(MainSpaceXDialog)}.greeting", null, cancellationToken);
-        }
+        private static async Task<DialogTurnResult> GreetingStep(WaterfallStepContext stepContext, CancellationToken cancellationToken) => await stepContext.BeginDialogAsync($"{nameof(MainSpaceXDialog)}.greeting", null, cancellationToken);
 
         private async Task<DialogTurnResult> InitialStep(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var result = stepContext.Result;
-            return await stepContext.NextAsync(stepContext, cancellationToken);
+            var company  = await _spaceXApi.GetCompanyInfo();
+            var activity = MessageFactory.Text($"Hello there, SpaceX Bot here 🤖\r\n{company.Summary}");
+            await stepContext.Context.SendActivityAsync(activity, cancellationToken);
+
+            var promptOptions = new PromptOptions
+            {
+                Prompt = MessageFactory.Text("➡️ here is what I can do gor ya !"),
+                Choices = ChoiceFactory.ToChoices(new List<string>
+                {
+                    "Next Launch 🚀",
+                    "All Launches",
+                    "Crew ",
+                    "Launchpad"
+                })
+            };
+            return await stepContext.PromptAsync($"{nameof(MainSpaceXDialog)}.choice", promptOptions, cancellationToken);
         }
 
-        private async Task<DialogTurnResult> FinalStep(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private static async Task<DialogTurnResult> FinalStep(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            return await stepContext.EndDialogAsync(stepContext, cancellationToken);
+            stepContext.Values["choice"] = ((FoundChoice)stepContext.Result).Value;
+            return await stepContext.EndDialogAsync(null, cancellationToken);
         }
     }
 }

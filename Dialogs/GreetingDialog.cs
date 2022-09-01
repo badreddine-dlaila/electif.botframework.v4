@@ -90,7 +90,6 @@ public class GreetingDialog : ComponentDialog
         await stepContext.Context.SendActivityAsync(activity, cancellationToken);
 
         // End dialog
-        //return await stepContext.BeginDialogAsync($"{nameof(MainDialog)}.bugReport", null, cancellationToken);
         return await stepContext.EndDialogAsync(null, cancellationToken);
     }
 }
